@@ -1,0 +1,147 @@
+<div class="dashboard">
+  <aside class="sidebar">
+    <div class="top-aside">
+      <div class="user-icon">
+        <img src="assets/user.png" alt="" class="icon">
+      </div>
+      <h3 class="user-name">Bramdon Santiago</h3>
+      <p class="email">bramdsantiago&#64;gmail.com</p>
+    </div>
+    <nav>
+      <a routerLink="/"><i class="fa-solid fa-house"></i>Home</a>
+      <a routerLink="/"><i class="fa-solid fa-chart-simple"></i>Graphs</a>
+      <a routerLink="/"><i class="fa-solid fa-mug-hot"></i>Clients</a>
+      <a routerLink="/"><i class="fa-solid fa-scale-unbalanced-flip"></i>Sales</a>
+      <a routerLink="/"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+    </nav>
+  </aside>
+  <main class="main-dash">
+    <div>
+      <h1 class="title-main-dashboard">Dashboard user</h1>
+      <div class="tags">
+        <div class="tag">
+          <h3 class="title-tag">Total</h3>
+          <span class="quantity">$68</span>
+        </div>
+        <div class="tag">
+          <h3 class="title-tag">Likes</h3>
+          <span class="quantity">28</span>
+        </div>
+        <div class="tag">
+          <h3 class="title-tag">Rating</h3>
+          <span class="quantity">5</span>
+        </div>
+        <div class="tag">
+          <h3 class="title-tag">Sales</h3>
+          <span class="quantity">121</span>
+        </div>
+      </div>
+    </div>
+  <div class="table-data">
+    <div class="btn-create">
+      <button (click)="createTicket()" type="button" class="btn btn-color-primary">Crear nuevo</button>
+    </div>
+    @if(showForm) {
+      <div class="form-ticket">
+        <h3>
+          @if (createForm) {
+            Crear ticket
+          }
+          @if (updateForm) {
+            Editar ticket
+          }
+        </h3>
+        <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+          <div class="grid-form">
+            <div class="col-form-6">
+              <label for="" class="label-form">Nombre</label>
+              <input type="text" formControlName="nombre" placeholder="Nombre">
+              @if (ticketForm.get('nombre')?.invalid && ticketForm.get('nombre')?.touched) {
+                <div class="invalid-feedback">
+                    @if (ticketForm.get('nombre')?.errors?.['required']) {
+                      <p>El nombre es obligatorio</p>
+                    }
+                </div>
+              }
+            </div>
+            <div class="col-form-6">
+              <label for="" class="label-form">Email</label>
+              <input type="text" formControlName="email" placeholder="Teléfono">
+              @if (ticketForm.get('email')?.invalid && ticketForm.get('email')?.touched) {
+                <div class="invalid-feedback">
+                    @if (ticketForm.get('email')?.errors?.['required']) {
+                      <p>El email es obligatorio</p>
+                    }
+                </div>
+              }
+            </div>
+            <div class="col-form-6">
+              <label for="" class="label-form">Teléfono</label>
+              <input type="text" formControlName="telefono" placeholder="Email">
+              @if (ticketForm.get('telefono')?.invalid && ticketForm.get('telefono')?.touched) {
+                <div class="invalid-feedback">
+                    @if (ticketForm.get('telefono')?.errors?.['required']) {
+                      <p>El teléfono es obligatorio</p>
+                    }
+                </div>
+              }
+            </div>
+            <div class="col-form-6">
+              <label for="" class="label-form">Ciudad</label>
+              <input type="text" formControlName="ciudad" placeholder="Ciudad">
+              @if (ticketForm.get('ciudad')?.invalid && ticketForm.get('ciudad')?.touched) {
+                <div class="invalid-feedback">
+                    @if (ticketForm.get('ciudad')?.errors?.['required']) {
+                      <p>La ciudad es obligatorio</p>
+                    }
+                </div>
+              }
+            </div>
+          </div>
+          <button type="submit" [disabled]="!ticketForm.valid" class="btn btn-color-terteary btn-small rounded btn-submit">Enviar</button>
+          <!-- <p>{{ ticketForm?.value | json }}</p>
+          <p>{{ ticketForm.get('nombre')?.errors | json }}</p> -->
+        </form>
+      </div>
+    }
+    <div class="table-responsive">
+      <h3>Tickets</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Ciudad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (ticket of tickets; track ticket.id) {
+              <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.name }}</td>
+                <td>{{ ticket.email }}</td>
+                <td>{{ ticket.phone }}</td>
+                <td>{{ ticket.address.city }}</td>
+                <td class="actions">
+                    <button (click)="editTicket(ticket)">
+                      <img src="/assets/pencil-blue.png" alt="" class="icon">
+                    </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+
+  </main>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+
+<router-outlet />
