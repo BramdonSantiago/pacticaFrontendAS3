@@ -108,15 +108,35 @@
             }
         }
     }
+    // .btn-create {
+    //     text-align: end;
+    //     margin-bottom: 2rem;
+    // }
+    // .form-ticket {
+    //     margin-bottom: 3rem;
+    // }
+
     .btn-create {
-        text-align: end;
-        margin-bottom: 2rem;
-    }
-    .form-ticket {
-        margin-bottom: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        .title-tickets {
+            margin-bottom: 0;
+            // display: inline-flex;
+            // align-items: center;
+            .icon {
+                margin-right: 0.250rem;
+                width: 13px;
+                vertical-align: middle;
+            }
+        }
     }
     .table-data {
-        margin-top: 2rem;
+        margin-top: 3rem;
+        .slider {
+            cursor: not-allowed;
+        }
     }
 
     .label-form {
@@ -128,8 +148,10 @@
     }
 }
 
+
+
 @media(min-width: 1200px) {
-.dashboard {
+    .dashboard {
     display: flex;
     justify-content: space-between;
         .sidebar {
@@ -158,4 +180,10 @@
             width: calc(50% - 1rem);
         }
     }
+    .modal {
+        .modal-content {
+            width: 50%;
+        }
+    } 
+    
 }

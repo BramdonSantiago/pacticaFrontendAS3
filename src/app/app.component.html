@@ -8,23 +8,23 @@
       <p class="email">bramdsantiago&#64;gmail.com</p>
     </div>
     <nav>
-      <a routerLink="/"><i class="fa-solid fa-house"></i>Home</a>
-      <a routerLink="/"><i class="fa-solid fa-chart-simple"></i>Graphs</a>
-      <a routerLink="/"><i class="fa-solid fa-mug-hot"></i>Clients</a>
-      <a routerLink="/"><i class="fa-solid fa-scale-unbalanced-flip"></i>Sales</a>
-      <a routerLink="/"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+      <a routerLink="/"><i class="fa-solid fa-house"></i>Inicio</a>
+      <a routerLink="/"><i class="fa-solid fa-chart-simple"></i>Gráficos</a>
+      <a routerLink="/"><i class="fa-solid fa-mug-hot"></i>Clientes</a>
+      <a routerLink="/"><i class="fa-solid fa-scale-unbalanced-flip"></i>Ventas</a>
+      <a routerLink="/"><i class="fa-solid fa-right-from-bracket"></i>Cerrar sersión</a>
     </nav>
   </aside>
   <main class="main-dash">
     <div>
-      <h1 class="title-main-dashboard">Dashboard user</h1>
+      <h1 class="title-main-dashboard">Dashboard usuario</h1>
       <div class="tags">
         <div class="tag">
           <h3 class="title-tag">Total</h3>
           <span class="quantity">$68</span>
         </div>
         <div class="tag">
-          <h3 class="title-tag">Likes</h3>
+          <h3 class="title-tag">Me gusta</h3>
           <span class="quantity">28</span>
         </div>
         <div class="tag">
@@ -32,102 +32,78 @@
           <span class="quantity">5</span>
         </div>
         <div class="tag">
-          <h3 class="title-tag">Sales</h3>
+          <h3 class="title-tag">Ventas</h3>
           <span class="quantity">121</span>
         </div>
       </div>
     </div>
   <div class="table-data">
     <div class="btn-create">
+      <h3 class="title-tickets">
+        Tickets <sup><small>(<img src="assets/ticket-black-2.png" alt="Icono ticket" class="icon">{{ tickets?.data.length }} tickets)</small></sup>
+      </h3>
       <button (click)="createTicket()" type="button" class="btn btn-color-primary">Crear nuevo</button>
     </div>
-    @if(showForm) {
-      <div class="form-ticket">
-        <h3>
-          @if (createForm) {
-            Crear ticket
-          }
-          @if (updateForm) {
-            Editar ticket
-          }
-        </h3>
-        <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
-          <div class="grid-form">
-            <div class="col-form-6">
-              <label for="" class="label-form">Nombre</label>
-              <input type="text" formControlName="nombre" placeholder="Nombre">
-              @if (ticketForm.get('nombre')?.invalid && ticketForm.get('nombre')?.touched) {
-                <div class="invalid-feedback">
-                    @if (ticketForm.get('nombre')?.errors?.['required']) {
-                      <p>El nombre es obligatorio</p>
-                    }
-                </div>
-              }
-            </div>
-            <div class="col-form-6">
-              <label for="" class="label-form">Email</label>
-              <input type="text" formControlName="email" placeholder="Teléfono">
-              @if (ticketForm.get('email')?.invalid && ticketForm.get('email')?.touched) {
-                <div class="invalid-feedback">
-                    @if (ticketForm.get('email')?.errors?.['required']) {
-                      <p>El email es obligatorio</p>
-                    }
-                </div>
-              }
-            </div>
-            <div class="col-form-6">
-              <label for="" class="label-form">Teléfono</label>
-              <input type="text" formControlName="telefono" placeholder="Email">
-              @if (ticketForm.get('telefono')?.invalid && ticketForm.get('telefono')?.touched) {
-                <div class="invalid-feedback">
-                    @if (ticketForm.get('telefono')?.errors?.['required']) {
-                      <p>El teléfono es obligatorio</p>
-                    }
-                </div>
-              }
-            </div>
-            <div class="col-form-6">
-              <label for="" class="label-form">Ciudad</label>
-              <input type="text" formControlName="ciudad" placeholder="Ciudad">
-              @if (ticketForm.get('ciudad')?.invalid && ticketForm.get('ciudad')?.touched) {
-                <div class="invalid-feedback">
-                    @if (ticketForm.get('ciudad')?.errors?.['required']) {
-                      <p>La ciudad es obligatorio</p>
-                    }
-                </div>
-              }
-            </div>
-          </div>
-          <button type="submit" [disabled]="!ticketForm.valid" class="btn btn-color-terteary btn-small rounded btn-submit">Enviar</button>
-          <!-- <p>{{ ticketForm?.value | json }}</p>
-          <p>{{ ticketForm.get('nombre')?.errors | json }}</p> -->
-        </form>
-      </div>
-    }
     <div class="table-responsive">
-      <h3>Tickets</h3>
-        <table>
+      <!-- <form class="search-content">
+        <input (input)="onSearch($event)" type="search" placeholder="Buscar nombre ticket...">
+      </form> -->
+      <table>
           <thead>
             <tr>
               <th>ID</th>
               <th>Nombre</th>
-              <th>Email</th>
-              <th>Teléfono</th>
-              <th>Ciudad</th>
+              <th>Descripción</th>
+              <th>Activo</th>
+              <th>Archivado</th>
+              <th>Fecha creación</th>
+              <th>Última actualización</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            @for (ticket of tickets; track ticket.id) {
+            @if (tickets?.data.length === 0) {
+              <tr>
+                <td colspan="8">No hay tickets, comienza creando uno</td>
+              </tr>
+            }
+            @for (ticket of tickets?.data; track ticket.id) {
               <tr>
                 <td>{{ ticket.id }}</td>
-                <td>{{ ticket.name }}</td>
-                <td>{{ ticket.email }}</td>
-                <td>{{ ticket.phone }}</td>
-                <td>{{ ticket.address.city }}</td>
+                <td>{{ ticket.attributes.title }}</td>
+                <td>{{ ticket.attributes.description }}</td>
+                <td>
+                  <div class="switch-container">
+                    <label class="switch">
+                      @if (  ticket.attributes.active  ) {
+                        <input type="checkbox" checked disabled>
+                      } @else {
+                        <input type="checkbox" disabled>
+                      }
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </td>
+                <td>
+                <div class="switch-container">
+                  <label class="switch">
+                    @if ( ticket.attributes.archived  ) {
+                      <input type="checkbox" checked disabled>
+                    } @else {
+                      <input type="checkbox" disabled>
+                    }
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                </td>
+                <td>{{ ticket.attributes.createdAt | date:'medium' }}</td>
+                <td>{{ ticket.attributes.updatedAt | date:'medium' }}</td>
                 <td class="actions">
                     <button (click)="editTicket(ticket)">
-                      <img src="/assets/pencil-blue.png" alt="" class="icon">
+                      <img src="/assets/pencil-blue.png" alt="Editar icono" class="icon">
+                    </button>
+                    <button (click)="modalDeleteTicket(ticket.id)">
+                      <img src="/assets/trash-black.png" alt="Delete icono" class="icon">
                     </button>
                 </td>
               </tr>
@@ -137,6 +113,123 @@
     </div>
   </div>
 
+  @if(showForm) {
+    <div class="modal" [class.show-modal]="showForm">
+      <div class="modal-content">
+        <div class="form-ticket">
+          <div class="modal-header">
+            <h3>
+              @if (createForm) {
+                Crear ticket
+              }
+              @if (updateForm) {
+                Editar ticket
+              }
+            </h3>
+            <button (click)="closeModal()" class="btn-close-modal">
+              <img src="/assets/svg/close-black.svg" alt="Icono close modal">
+            </button>
+          </div>
+          <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+            <div class="grid-form">
+              <div class="col-form-6">
+                <label for="" class="label-form">Título</label>
+                <input type="text" formControlName="titleInput" placeholder="Título">
+                @if (ticketForm.get('titleInput')?.invalid && ticketForm.get('titleInput')?.touched) {
+                  <div class="invalid-feedback">
+                      @if (ticketForm.get('titleInput')?.errors?.['required']) {
+                        <p>El título es obligatorio</p>
+                      }
+                  </div>
+                }
+              </div>
+              <div class="col-form-6">
+                <label for="" class="label-form">Descripción</label>
+                <input type="text" formControlName="descriptionInput" placeholder="Descripción">
+                @if (ticketForm.get('descriptionInput')?.invalid && ticketForm.get('descriptionInput')?.touched) {
+                  <div class="invalid-feedback">
+                      @if (ticketForm.get('descriptionInput')?.errors?.['required']) {
+                        <p>La descripción es obligatorio</p>
+                      }
+                  </div>
+                }
+              </div>
+              <div class="col-form-6">
+                <label for="" class="label-form">Activo</label>
+                <div class="switch-container">
+                  <label class="switch">
+                    <input type="checkbox" formControlName="activeInput">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-form-6">
+                <label for="" class="label-form">Archivado</label>
+                <div class="switch-container">
+                  <label class="switch">
+                    <input type="checkbox" formControlName="archivedInput">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" [disabled]="!ticketForm.valid" class="btn btn-color-terteary btn-small rounded btn-submit">Enviar</button>
+            </div>
+            <!-- <p>{{ ticketForm?.value | json }}</p> -->
+            <!-- <p>{{ ticketForm.get('titleInput')?.errors | json }}</p> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if(showModalDelete) {
+    <div class="modal" [class.show-modal]="showModalDelete">
+      <div class="modal-content">
+        <div class="form-ticket">
+          <div class="modal-header">
+            <h3>
+              Eliminar registro
+            </h3>
+            <button (click)="closeModal()" class="btn-close-modal">
+              <img src="/assets/svg/close-black.svg" alt="Icono close modal">
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="icon-content">
+              <img src="assets/exclamation-purple.png" alt="icono exclamación">
+            </div>
+            <h4>¿Estás seguro?</h4>
+            <p>Este cambio no podrá ser revertido</p>
+          </div>
+          <div class="modal-footer">
+            <button (click)="deleteTicket()" class="btn btn-color-terteary rounded">Sí, borralo!</button>
+            <button (click)="closeModal()" class="btn btn-color-primary rounded">Mejor regresa</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if(showModalSuccess) {
+    <div class="modal" [class.show-modal]="showModalSuccess">
+      <div class="modal-content">
+        <div class="form-ticket">
+          <div class="modal-body">
+            <div class="icon-content">
+              <img src="assets/check-purple.png" alt="icono exclamación">
+            </div>
+            <h4>{{ titleModalSuccess }}</h4>
+            <p>{{ textModalSuccess }}</p>
+          </div>
+          <div class="modal-footer">
+            <button (click)="closeModal()" class="btn btn-color-terteary rounded">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 
   </main>
 </div>
