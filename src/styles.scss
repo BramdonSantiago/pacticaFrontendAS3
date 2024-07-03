@@ -37,11 +37,11 @@ html {
 .table-responsive {
     background-color: $white;
     overflow: auto;
-    // border-radius: 16px;
-    // -webkit-border-radius: 16px;
-    // -moz-border-radius: 16px;
-    // -ms-border-radius: 16px;
-    // -o-border-radius: 16px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
     .search-content {
         width: 100%;
         margin-bottom: 1rem;

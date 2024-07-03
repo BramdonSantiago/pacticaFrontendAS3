@@ -15,7 +15,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  // title = 'practicaFrontendAS3';
   @Output() search = new EventEmitter<string>();
   tickets!: any;
   filteredResults!: any;
@@ -41,11 +40,6 @@ export class AppComponent {
     this.getTickets();
   }
 
-  // onSearch(event: Event): void {
-  //   this.filteredResults = this.tickets.filter(item =>
-  //     item.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-  // }
 
  
   getTickets() {
@@ -79,8 +73,6 @@ export class AppComponent {
     if (this.ticketForm.valid && this.createForm) {
       this.showForm = !this.showForm;
 
-      // const formData = this.ticketForm.value;
-
       const ticket = this.transformFormToTicket(this.ticketForm.value);
 
       this.apiService.createTicket(ticket).subscribe(
@@ -105,15 +97,12 @@ export class AppComponent {
       this.updateForm = false;
       this.currentTicketId = 0;
     }
-
-    this.ticketForm.reset({
-      titleInput: '',
-      descriptionInput: '',
-      activeInput: false,
-      archivedInput: false
-    });
-
-
+    // this.ticketForm.reset({
+    //   titleInput: '',
+    //   descriptionInput: '',
+    //   activeInput: false,
+    //   archivedInput: false
+    // });
   }
 
 
@@ -124,8 +113,6 @@ export class AppComponent {
   updateTicket(ticketId: number, ticket: any) {
     if (this.ticketForm.valid && this.updateForm) {
       this.showForm = !this.showForm;
-
-      // const formData = this.ticketForm.value;
 
       const ticket = this.transformFormToTicket(this.ticketForm.value);
 
@@ -152,12 +139,12 @@ export class AppComponent {
       this.currentTicketId = 0;
     }
 
-    this.ticketForm.reset({
-      titleInput: '',
-      descriptionInput: '',
-      activeInput: false,
-      archivedInput: false
-    });
+    // this.ticketForm.reset({
+    //   titleInput: '',
+    //   descriptionInput: '',
+    //   activeInput: false,
+    //   archivedInput: false
+    // });
 
 
   }
@@ -174,6 +161,7 @@ export class AppComponent {
           console.log('Ticket eliminado:', response);
           this.ticketForm.reset();
           this.getTickets();
+          this.showModalDelete = !this.showModalDelete;
           this.showModalSuccess = true;
           this.titleModalSuccess = "¡Ticket eliminado!";
           this.textModalSuccess = "Este ticket ha sido eliminado";
