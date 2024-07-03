@@ -21,6 +21,7 @@ export class ApiService {
       });
       return this.httpClient.get(this.url, { headers });
     }
+    
 
     createTicket(ticketData: Ticket): Observable<Ticket> {
       const headers = new HttpHeaders({
@@ -42,6 +43,7 @@ export class ApiService {
       };
       return this.httpClient.put<Ticket>(this.url+`/${ticketId}`, payload, { headers });
     }
+
 
     deleteTicket(ticketId: number): Observable<any> {
       const headers = new HttpHeaders({

@@ -7,12 +7,13 @@
       <h3 class="user-name">Bramdon Santiago</h3>
       <p class="email">bramdsantiago&#64;gmail.com</p>
     </div>
-    <nav>
+    <button (click)="menuOpciones()" type="button" class="btn btn-secondary btn-menu-opciones-mobile">Menu opciones</button>
+    <nav [class.show-menu-opciones]="showMenuOptions" class="menu-opciones">
       <a routerLink="/"><i class="fa-solid fa-house"></i>Inicio</a>
       <a routerLink="/"><i class="fa-solid fa-chart-simple"></i>Gráficos</a>
       <a routerLink="/"><i class="fa-solid fa-mug-hot"></i>Clientes</a>
       <a routerLink="/"><i class="fa-solid fa-scale-unbalanced-flip"></i>Ventas</a>
-      <a routerLink="/"><i class="fa-solid fa-right-from-bracket"></i>Cerrar sersión</a>
+      <a routerLink="/"><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sersión</a>
     </nav>
   </aside>
   <main class="main-dash">

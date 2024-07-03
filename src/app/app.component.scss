@@ -7,9 +7,10 @@
         background-color: $primary; 
         color: $white;
         // padding: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
         text-align: center;
         .top-aside {
-            padding-top: 2rem;
             padding-left: 1rem;
             padding-right: 1rem;
         }
@@ -48,8 +49,9 @@
             width: 100%;
             font-weight: 400;
             a {
-                padding: 1rem 4rem;
-                display: block;
+                padding: 1rem;
+                display: flex;
+                justify-content: center;
                 width: 100%;
                 margin-bottom: 1rem;
                 transition: all .6s ease;
@@ -63,6 +65,9 @@
                 &:hover {
                     background-color: $quaternary;
                 }
+                .fa-arrow-right-from-bracket {
+                    rotate: 180deg;
+                }
             }
         }
     }
@@ -75,6 +80,7 @@
     }
     .tag {
         width: 100%;
+        text-align: center;
         background-color: #FFF;
         color: $black;
         min-height: 10rem;
@@ -83,6 +89,7 @@
         flex-direction: column;
         justify-content: center;
         box-shadow: 5px 5px 10px 0 rgba(#000, .2);
+        margin-bottom: 1rem;
         transition: all .6s ease;
         -webkit-transition: all .6s ease;
         -moz-transition: all .6s ease;
@@ -148,9 +155,35 @@
     }
 }
 
+@media(min-width: 768px) {
+    .tags {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        .tag {
+            flex: 0 0 calc(50% - 1rem);
+        }
+    }
+}
+
+@media(max-width: 1199px) {
+    .btn-menu-opciones-mobile {
+        margin-top: 2rem;
+    }
+    .menu-opciones {
+        display: none !important;
+        &.show-menu-opciones {
+            display: block !important;
+        }
+    }
+}
 
 
 @media(min-width: 1200px) {
+    .btn-menu-opciones-mobile {
+        display: none;
+    }
     .dashboard {
     display: flex;
     justify-content: space-between;
@@ -163,10 +196,8 @@
             min-height: 100vh;
         }
         .tags {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
             .tag {
+                text-align: start;
                 flex: 0 0 calc(25% - 1rem);
             }
         }
