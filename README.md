@@ -1,6 +1,6 @@
 # PracticaFrontendAS3
 
-Es una panel admministrativo para la gestión de eventos y tickets.
+Es un panel administrativo para la gestión de eventos y tickets.
 
 This project is a project Angular modern; Angular 17.
 
