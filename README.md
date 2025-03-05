@@ -1,6 +1,6 @@
 # PracticaFrontendAS3
 
-Es una App para la creación de eventos y tickets.
+Es una panel admministrativo para la gestión de eventos y tickets.
 
 This project is a project Angular modern; Angular 17.
 
